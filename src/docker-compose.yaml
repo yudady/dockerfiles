@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  ab:
+    build: ./ab
+    image: yudady/ab
+  tldr:
+    build: ./tldr
+    image: yudady/tldr
