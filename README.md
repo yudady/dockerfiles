@@ -13,3 +13,11 @@ This repo is inspired by [marcel-dempers](https://github.com/marcel-dempers/my-d
 # .bash_login
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 ```
+
+
+## build image
+
+```shell
+cd src
+docker-compose build
+```

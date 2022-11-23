@@ -1,4 +1,4 @@
-# windows wsl2 -> cd ~ -> cat .bashrc
+# windows wsl2 -> cd ~ -> vim .bashrc or .bash_login
 # git bash -> C:\Users\user\.bash_profile
 
 
