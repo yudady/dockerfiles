@@ -6,3 +6,6 @@ services:
   tldr:
     build: ./tldr
     image: yudady/tldr
+  vscode-docker-from-docker:
+    build: ./vscode-docker-from-docker
+    image: yudady/vscode-docker-from-docker
