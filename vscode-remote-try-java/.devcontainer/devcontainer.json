@@ -1,9 +1,8 @@
-// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.195.0/containers/java
+// https://containers.dev
 {
-	"name": "my-project-devcontainer",
+	"name": "docker-from-docker",
 	// "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-	"dockerFile" : "Dockerfile"
+	"dockerFile" : "Dockerfile",
 
 
 
@@ -16,6 +15,10 @@
 	// },
 	"features": {
 		// "ghcr.io/devcontainers/features/java:1":{}
+		"ghcr.io/devcontainers/features/docker-from-docker:1": {
+			"version": "latest",
+			"moby": true
+		}
 	},
 		
 	// Configure tool-specific properties.
@@ -41,5 +44,5 @@
 	// "postCreateCommand": "java -version",
 
 	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-	// "remoteUser": "vscode"
+	"remoteUser": "root"
 }
