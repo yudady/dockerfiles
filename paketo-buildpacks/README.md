@@ -6,6 +6,22 @@ cd samples/java/maven
 pack build paketo-demo-app --builder paketobuildpacks/builder:base
 
 
+pack build java-native \
+--env BP_NATIVE_IMAGE=true \
+--env BP_LOG_LEVEL=DEBUG \
+--builder paketobuildpacks/builder:base \
+--buildpack paketo-buildpacks/graalvm \
+--buildpack paketo-buildpacks/java-native-image \
+--volume ${HOME}/.m2:/home/cnb/.m2:rw 
+
+
+
+
+
+
+
+
+
 docker run -d -p 8080:8080 -e PORT=8080 paketo-demo-app
 
 pack build samples/java --path java/maven --volume $HOME/.m2:/home/cnb/.m2:rw
