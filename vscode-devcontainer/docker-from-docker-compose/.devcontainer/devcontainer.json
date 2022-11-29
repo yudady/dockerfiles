@@ -1,31 +1,50 @@
+// https://containers.dev
 {
-	"name": "Docker from Docker Compose",
-	"dockerComposeFile": "docker-compose.yml",
-	"service": "app",
-	"workspaceFolder": "/workspace",
+	"name": "docker-from-docker",
+	// "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    //	"dockerFile" : "Dockerfile",
 
-	// Use this environment variable if you need to bind mount your local source code into a new container.
-	"remoteEnv": {
-		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+
+
+	 "service": "vscodeapp",
+	 "dockerComposeFile": "docker-compose.yml",
+	 "workspaceFolder": "/workspace",
+	 // Use this environment variable if you need to bind mount your local source code into a new container.
+	 "remoteEnv": {
+	 	"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	 },
+
+	// see https://containers.dev/features
+	"features": {
+		// "ghcr.io/devcontainers/features/java:1":{}
+		"ghcr.io/devcontainers/features/docker-from-docker:1": {
+			"version": "latest",
+			"moby": true
+		}
 	},
-
+		
 	// Configure tool-specific properties.
 	"customizations": {
 		// Configure properties specific to VS Code.
-		"vscode": {		
+		"vscode": {
+			// Set *default* container specific settings.json values on container create.
+			"settings": { 
+				// "maven.executable.path": "/usr/local/sdkman/candidates/maven/current/bin/mvn"
+			},
+			
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
-				"ms-azuretools.vscode-docker"
+				// "vscjava.vscode-java-pack"
 			]
 		}
-	},
+	}
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "docker --version",
+	// "postCreateCommand": "java -version",
 
-	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+//	"remoteUser": "root"
 }
