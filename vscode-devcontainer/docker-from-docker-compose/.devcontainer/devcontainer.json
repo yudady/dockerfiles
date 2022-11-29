@@ -20,7 +20,8 @@
 		"ghcr.io/devcontainers/features/docker-from-docker:1": {
 			"version": "latest",
 			"moby": true
-		}
+		},
+		"ghcr.io/devcontainers/features/java:1": {}
 	},
 		
 	// Configure tool-specific properties.

@@ -4,6 +4,21 @@
 	"service": "app",
 	"workspaceFolder": "/workspace",
 
+
+
+
+	// see https://containers.dev/features
+	"features": {
+		"ghcr.io/devcontainers/features/docker-from-docker:1": {
+			"version": "latest",
+			"moby": true
+		},
+		"ghcr.io/devcontainers/features/java:1": {}
+	},
+
+
+
+
 	// Configure tool-specific properties.
 	"customizations": {
 		// Configure properties specific to VS Code.
