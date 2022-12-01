@@ -1,12 +1,11 @@
-apiVersion: skaffold/v4beta1
+apiVersion: skaffold/v2alpha3
 kind: Config
 deploy:
   kubectl:
     # does the follwing: 1. on start apply the files,
     # 2. on change, apply the files,
     # 3. on stop delete objects in the cluster
-    flags:
-      apply:
+    manifests:
       - ./infra/k8s/*
 build:
   local:
