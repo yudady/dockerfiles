@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  client:
+    build: ./client
+    image: yudady/client
+    ports:
+      - 3000:3000
+  comments:
+    build: ./comments
+    image: yudady/comments
+    ports:
+      - 4001:4001
+  event-bus:
+    build: ./event-bus
+    image: yudady/event-bus
+    ports:
+      - 4005:4005
+  moderation:
+    build: ./moderation
+    image: yudady/moderation
+    ports:
+      - 4003:4003
+  posts:
+    build: ./posts
+    image: yudady/posts
+    ports:
+      - 4000:4000
+  query:
+    build: ./query
+    image: yudady/query
+    ports:
+      - 4002:4002
