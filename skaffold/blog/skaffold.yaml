@@ -1,12 +1,6 @@
-apiVersion: skaffold/v2beta29
+apiVersion: skaffold/v3
 kind: Config
-deploy:
-  kubectl:
-    # does the follwing: 1. on start apply the files,
-    # 2. on change, apply the files,
-    # 3. on stop delete objects in the cluster
-    manifests:
-      - ./infra/k8s/*
+
 build:
   local:
     push: false # don't push on Docker Hub
@@ -14,49 +8,72 @@ build:
   artifacts:
     - image: nkolchakov/client # rebuild entire image if below sync files are not matched
       context: client # watch for changes in this dir
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "src/**/*.js" # when js file is changed, copy it to the Pod
-            dest: .
     - image: nkolchakov/comments
       context: comments
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "*.js"
-            dest: .
     - image: nkolchakov/event-bus
       context: event-bus
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "*.js"
-            dest: .
     - image: nkolchakov/moderation
       context: moderation
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "*.js"
-            dest: .
     - image: nkolchakov/posts
       context: posts
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "*.js"
-            dest: .
     - image: nkolchakov/query
       context: query
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "*.js"
-            dest: .
+
+profiles:
+  - name: blog
+    activation:
+      - command: dev
+      - kubeContext: minikube
+    build:
+      artifacts:
+        - image: yudady/client # rebuild entire image if below sync files are not matched
+          context: client # watch for changes in this dir
+          docker:
+            dockerfile: Dockerfile
+          sync:
+            manual:
+              - src: "src/**/*.js" # when js file is changed, copy it to the Pod
+                dest: .
+        - image: yudady/comments
+          context: comments
+          docker:
+            dockerfile: Dockerfile
+          sync:
+            manual:
+              - src: "*.js"
+                dest: .
+        - image: yudady/event-bus
+          context: event-bus
+          docker:
+            dockerfile: Dockerfile
+          sync:
+            manual:
+              - src: "*.js"
+                dest: .
+        - image: yudady/moderation
+          context: moderation
+          docker:
+            dockerfile: Dockerfile
+          sync:
+            manual:
+              - src: "*.js"
+                dest: .
+        - image: yudady/posts
+          context: posts
+          docker:
+            dockerfile: Dockerfile
+          sync:
+            manual:
+              - src: "*.js"
+                dest: .
+        - image: yudady/query
+          context: query
+          docker:
+            dockerfile: Dockerfile
+          sync:
+            manual:
+              - src: "*.js"
+                dest: .
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
