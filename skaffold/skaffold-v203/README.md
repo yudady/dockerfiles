@@ -1,4 +1,4 @@
-# Examples
+# v2.0.3 Release - 12/01/2022 Examples
 
 Each of those examples can be tried with `skaffold dev`. For example:
 
