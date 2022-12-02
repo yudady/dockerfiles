@@ -1,29 +1,46 @@
 apiVersion: skaffold/v3
 kind: Config
+metadata:
+  name: BLOG
+
 
 build:
   local:
     push: false # don't push on Docker Hub
   # something that needs to be maintained
   artifacts:
-    - image: nkolchakov/client # rebuild entire image if below sync files are not matched
+    - image: yudady/client # rebuild entire image if below sync files are not matched
       context: client # watch for changes in this dir
-    - image: nkolchakov/comments
+    #      docker:
+    #        dockerfile: Dockerfile
+
+    - image: yudady/comments
       context: comments
-    - image: nkolchakov/event-bus
+    - image: yudady/event-bus
       context: event-bus
-    - image: nkolchakov/moderation
+    - image: yudady/moderation
       context: moderation
-    - image: nkolchakov/posts
+    - image: yudady/posts
       context: posts
-    - image: nkolchakov/query
+    - image: yudady/query
       context: query
+
+deploy:
+  kubectl:
+    flags:
+      disableValidation: true
+  kubeContext: minikube
+  logs:
+    prefix: podAndContainer
+
 
 profiles:
   - name: blog
     activation:
       - command: dev
       - kubeContext: minikube
+
+
     build:
       artifacts:
         - image: yudady/client # rebuild entire image if below sync files are not matched
