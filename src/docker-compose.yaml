@@ -6,4 +6,7 @@ services:
   tldr:
     build: ./tldr
     image: yudady/tldr
+  graal-vm:
+    build: ./graal-vm
+    image: yudady/graal-vm
 
