@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  nginx-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ..:/workspace:cached
+    command: sleep infinity
+    networks:
+      - vscode
+
+networks:
+  vscode:
+    driver: bridge

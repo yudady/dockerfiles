@@ -16,12 +16,10 @@
 
 	// see https://containers.dev/features
 	"features": {
-		// "ghcr.io/devcontainers/features/java:1":{}
 		"ghcr.io/devcontainers/features/docker-from-docker:1": {
 			"version": "latest",
 			"moby": true
-		},
-		"ghcr.io/devcontainers/features/java:1": {}
+		}
 	},
 		
 	// Configure tool-specific properties.
@@ -38,7 +36,7 @@
 				// "vscjava.vscode-java-pack"
 			]
 		}
-	}
+	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
@@ -47,5 +45,5 @@
 	// "postCreateCommand": "java -version",
 
 	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-//	"remoteUser": "root"
+	"remoteUser": "root"
 }
