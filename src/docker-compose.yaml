@@ -9,4 +9,6 @@ services:
   graal-vm:
     build: ./graal-vm
     image: yudady/graal-vm
-
+  pack:
+    build: ./pack
+    image: yudady/pack
