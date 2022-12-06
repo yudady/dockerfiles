@@ -1,7 +1,7 @@
 // https://containers.dev
 {
-  "name": "nginx-app-vscode",
-  "service": "nginx-app",
+  "name": "nginx-url-rewrite-vscode",
+  "service": "nginx-url-rewrite",
   "dockerComposeFile": "docker-compose.yml",
   "workspaceFolder": "/workspace",
   // Use this environment variable if you need to bind mount your local source code into a new container.
@@ -16,19 +16,18 @@
     "vscode": {
       // Set *default* container specific settings.json values on container create.
       "settings": {
-        "files.eol": "\n",
-        // "maven.executable.path": "/usr/local/sdkman/candidates/maven/current/bin/mvn"
+        "files.eol": "\n"
       },
       // Add the IDs of extensions you want installed when the container is created.
       "extensions": [
-        // "ms-edgedevtools.vscode-edge-devtools"
+       // "ms-edgedevtools.vscode-edge-devtools"
       ]
     }
   },
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  // "forwardPorts": [],
+  "forwardPorts": [80],
   // Use 'postCreateCommand' to run commands after the container is created.
-  // "postCreateCommand": "java -version",
+  "postCreateCommand": "nginx",
   // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
   "remoteUser": "root"
 }
