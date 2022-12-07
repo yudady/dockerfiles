@@ -1,20 +1,20 @@
 version: '3.8'
 
 services:
-  myapp-v1:
-    container_name: proxy-myapp-v1
-    image: yudady/myapp:v1
+  mygo-v1:
+    container_name: proxy-mygo-v1
+    image: yudady/mygo:v1
 
-  myapp-v2:
-    container_name: proxy-myapp-v2
+  mygo-v2:
+    container_name: proxy-mygo-v2
     depends_on:
-      - myapp-v1
-    image: yudady/myapp:v2
+      - mygo-v1
+    image: yudady/mygo:v2
       
   nginx-proxy:
     container_name: nginx-proxy
     depends_on:
-      - myapp-v2
+      - mygo-v2
     build:
       context: .
       dockerfile: Dockerfile
