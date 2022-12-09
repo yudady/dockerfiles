@@ -1,13 +1,16 @@
-version: '3'
+version: '3.8'
 services:
-  dns:
-    build: .
-    hostname: ns
-    network_mode: host
+  bind9:
+    container_name: bind9
+    image: yudady/bind9
+    build:
+      context: .
+    restart: always
     ports:
       - "53:53/udp"
       - "53:53/tcp"
     volumes:
-      - ./conf/named.conf:/etc/bind/named.conf:z
+      - ./conf/named/named.conf:/etc/bind/named.conf:z
       - ./conf/zone/:/etc/bind/zone/:z
+#      - ./conf/etc/resolv.conf:/etc/resolv.conf
     command: named -c /etc/bind/named.conf -g -u named

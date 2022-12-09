@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  bind9:
+    container_name: bind9
+    image: yudady/bind9
+    build:
+      context: .
+    restart: always
+    ports:
+    - "53:53/udp"
+    - "53:53/tcp"
+    - "10000:10000/tcp"
+    volumes:
+    - ./data:/data
