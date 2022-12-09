@@ -12,5 +12,5 @@ services:
     volumes:
       - ./conf/named/named.conf:/etc/bind/named.conf:z
       - ./conf/zone/:/etc/bind/zone/:z
-#      - ./conf/etc/resolv.conf:/etc/resolv.conf
+      - ./conf/etc/resolv.conf:/etc/resolv.conf
     command: named -c /etc/bind/named.conf -g -u named
