@@ -6,5 +6,6 @@ $TTL 38400
 60480   ;Expire
 600 )   ;Negative Cache TTL
 
-@       IN      NS      ns.yudady.com.
-@       IN      NS      ns2.yudady.com.
+@                   IN      MX  1   127.0.0.1
+ns                  IN      A       127.0.0.1
+www                 IN      A       114.32.146.154
