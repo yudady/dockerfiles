@@ -12,6 +12,17 @@ https://soulteary.com/2021/08/19/dns-for-local-development.html
 
 ![img.png](img.png)
 
+## start ip local dns
+
+```shell
+
+docker run -d -p 53:53 -p 53:53/udp -v ${PWD}/hosts.conf:/hosts.conf:rw --name mydns yudady/go-dnsmasq   dnsmasq -l 0.0.0.0:53 -f /hosts.conf -p 1s --nameservers 168.95.192.1:53
+
+# dns server
+#        168.95.192.1
+#        168.95.1.1
+```
+
 
 ```shell
 PS C:\Users\yu_da\Desktop> ping werwerwerwer.lab.com
