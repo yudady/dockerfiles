@@ -3,6 +3,33 @@
 ## github 
 - https://github.com/sameersbn/docker-bind
 - web login https://localhost:10000   =>   root / password
+- docker exec -it bind bash
+
+```dockerfile
+docker run --name bind -d --restart=always \
+  --publish 53:53/tcp --publish 53:53/udp --publish 10000:10000/tcp \
+  --volume ${PWD}/data:/data \
+  sameersbn/bind:9.16.1-20200524
+
+
+docker run --name bind -d --restart=always \
+  --publish 53:53/tcp --publish 53:53/udp --publish 10000:10000/tcp \
+  --volume ${PWD}/data:/data \
+  --volume ${PWD}/conf/bind/etc/named.conf.local:/data/bind/etc/named.conf.local \
+  --volume ${PWD}/conf/bind/lib/named.conf.local:/data/bind/lib/getcharzp.cn.hosts \
+  sameersbn/bind:9.16.1-20200524
+
+
+docker exec -it bind bash
+```
+
+### STOP
+```shell
+docker stop bind
+docker rm -v bind
+```
+
+
 
 
 ```shell

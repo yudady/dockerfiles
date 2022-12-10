@@ -1,0 +1,4 @@
+zone "getcharzp.cn" {
+    type master;
+    file "/var/lib/bind/getcharzp.cn.hosts";
+};

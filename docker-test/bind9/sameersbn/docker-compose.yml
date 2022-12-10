@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  bind9:
-    container_name: bind9
-    image: yudady/bind9
+  bind:
+    container_name: bind
+    image: yudady/bind
     build:
       context: .
     restart: always

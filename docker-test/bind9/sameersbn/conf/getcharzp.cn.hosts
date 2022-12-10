@@ -1,0 +1,10 @@
+$ttl 38400
+getcharzp.cn.                 IN      SOA     9d427dee11c8. admin.yudady.com. (
+    1633857751
+    10800
+    3600
+    604800
+    38400 )
+yudady.com.                 IN      NS      9d427dee11c8.
+www.yudady.com.             IN      A       114.32.146.154
+
