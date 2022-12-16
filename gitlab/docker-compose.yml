@@ -1,6 +1,7 @@
 version: '3.6'
 services:
   gitlab:
+    container_name: gitlab
     image: 'gitlab/gitlab-ce:15.5.6-ce.0'
     restart: always
     hostname: 'www.tommy.tk'
@@ -18,9 +19,13 @@ services:
       - './data/data:/var/opt/gitlab'
     shm_size: '2gb'
 
-#  gitlab-runner:
-#    image: 'gitlab/gitlab-runner:latest'
-#    restart: always
-#    volumes:
-#      - '/var/run/docker.sock:/var/run/docker.sock'
-#      - './data/srv/gitlab-runner/config:/etc/gitlab-runner'
+  gitlab-runner:
+    container_name: gitlab-runner
+    image: 'gitlab/gitlab-runner:alpine3.15-bleeding'
+    restart: always
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - './gitlab-runner-config:/etc/gitlab-runner'
+
+
+
