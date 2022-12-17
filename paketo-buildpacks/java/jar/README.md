@@ -3,7 +3,7 @@
 ## Building
 
 ```bash
-pack build applications/jar
+pack build yudady/jar
 ```
 
 ## Running
