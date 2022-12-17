@@ -14,12 +14,10 @@ services:
   traefik:
     restart: unless-stopped
     container_name: traefik_docker_symfony
-    image: traefik:v2.0.2
+    image: traefik:v2.9.6
     depends_on:
-      - reverse-proxy-https-helper
-    deploy:
-      update_config:
-        delay: 10s
+      reverse-proxy-https-helper:
+        condition: service_started
     ports:
       - "80:80"
       - "443:443"
@@ -33,30 +31,39 @@ services:
     networks:
       - dev
 
-
-  www:
-    build: php
-    container_name: www_docker_symfony
-    ports:
-      - 8080:80
-    volumes:
-      - ./php/vhosts:/etc/apache2/sites-enabled
-      - ./:/var/www
-    restart: always
+  app1:
+    container_name: app1
+    # A container that exposes an API to show its IP address
+    image: yudady/mygo:v1
+    deploy:
+      replicas: 1
+    networks:
+      - dev
     labels:
       - "traefik.http.routers.app1.rule=Host(`app1.traefik.me`)"
       - "traefik.http.routers.app1-tls.tls.domains[0].main=app1.traefik.me"
       - "traefik.http.routers.app1-tls.tls.domains[0].sans=app1-*.traefik.me"
       - "traefik.http.routers.app1.tls=true"
+      - "traefik.http.services.app1.loadbalancer.server.port=8080" # container port
+
+  app2:
+    container_name: app2
+    # A container that exposes an API to show its IP address
+    image: yudady/mygo:v2
+    deploy:
+      replicas: 1
     networks:
       - dev
-
-
-
-
+    labels:
+      - "traefik.http.routers.app2.rule=Host(`app2.traefik.me`)"
+      - "traefik.http.routers.app2-tls.tls.domains[0].main=app2.traefik.me"
+      - "traefik.http.routers.app2-tls.tls.domains[0].sans=app2-*.traefik.me"
+      - "traefik.http.routers.app2.tls=true"
+      - "traefik.http.services.app2.loadbalancer.server.port=8080" # container port
 
 networks:
   dev:
 
 
 # https://app1.traefik.me
+# https://app2.traefik.me
