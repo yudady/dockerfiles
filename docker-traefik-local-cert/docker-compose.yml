@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-
+  # 先啟動 reverse-proxy-https-helper，把 certs 抓回來 ，在執行 compose up
   reverse-proxy-https-helper:
     image: alpine
     command: sh -c "cd /etc/ssl/traefik
@@ -15,9 +15,6 @@ services:
     restart: unless-stopped
     container_name: traefik_docker_symfony
     image: traefik:v2.9.6
-    depends_on:
-      reverse-proxy-https-helper:
-        condition: service_started
     ports:
       - "80:80"
       - "443:443"
