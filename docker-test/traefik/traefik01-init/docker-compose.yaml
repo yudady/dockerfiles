@@ -17,26 +17,28 @@ services:
 
 
 
-  whoami:
+  mygov1:
+    container_name: mygov1
     # A container that exposes an API to show its IP address
-    image: traefik/whoami
+    image: yudady/mygo:v1
     deploy:
       replicas: 3
     networks:
       - web
     labels:
-      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+      - "traefik.http.routers.mygov1.rule=Host(`mygov1.docker.localhost`)"
 
 
-  app_1:
+  mygov2:
+    container_name: mygov2
     # A container that exposes an API to show its IP address
-    image: traefik/whoami
+    image: yudady/mygo:v2
     deploy:
       replicas: 3
     networks:
       - web
     labels:
-      - "traefik.http.routers.app_1.rule=Host(`app_1.docker.localhost`)"
+      - "traefik.http.routers.mygov2.rule=Host(`mygov2.docker.localhost`)"
 
 
 
@@ -47,5 +49,5 @@ networks:
 
 # 需要修有 web network
 # $ docker network create web
-# curl -H Host:whoami.docker.localhost http://127.0.0.1
-# curl -H Host:app_1.docker.localhost http://127.0.0.1
+# curl -H Host:mygov1.docker.localhost http://127.0.0.1
+# curl -H Host:mygov2.docker.localhost http://127.0.0.1
