@@ -1,51 +1,85 @@
 version: "3.8"
-
 services:
-  reverse-proxy:
-    image: traefik:v2.9.6
-    command: --api.insecure=true --providers.docker
-    ports:
-      - "80:80"
-      - "8080:8080"
+  reverse-proxy-https-helper:
+    image: alpine
+    command: sh -c "cd /etc/ssl/traefik
+      && wget traefik.me/cert.pem -O cert.pem
+      && wget traefik.me/privkey.pem -O privkey.pem"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/certs:/etc/ssl/traefik
+    networks:
+      - docker-traffic
+
+  reverse-proxy:
+    restart: unless-stopped
+    container_name: traefik_docker_symfony
+    image: traefik:v2.9.6
+    depends_on:
+      reverse-proxy-https-helper:
+        condition: service_completed_successfully
+    ports:
+      - 80:80 # 暴露的 http 端口
+      - 443:443 # 暴露的 https 端口
+      - 8080:8080 # webUI暴露的端口(必須製定--api.insecure=true才可以訪問)
+    command: --api.insecure=true --providers.docker     # 啟用webUI 並告訴Traefile去監聽docker的容器實例
     labels:
-      - traefik.enable=false
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+    volumes:
+      - ./traefik.yml:/etc/traefik/traefik.yml
+      - ./tls.yml:/etc/traefik/tls.yml
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/certs:/etc/ssl/traefik
+    networks:
+      - docker-traffic
 
   home:
     restart: always
     image: denoland/deno:1.11.2
     command: run --allow-net --allow-read --allow-env /app/server.ts
     labels:
-      - traefik.http.routers.home.rule=Host(`startup.local.gd`)
+      - traefik.http.routers.home.rule=Host(`reverse.traefik.me`)
+      - traefik.http.routers.home-tls.tls.domains[0].main=reverse.traefik.me
+      - traefik.http.routers.home.tls=true
       - traefik.http.services.home.loadbalancer.server.port=8080
     environment:
       - APP_NAME=Home
     volumes:
       - ./app:/app
+    networks:
+      - docker-traffic
 
   shop:
     restart: always
     image: denoland/deno:1.11.2
     command: run --allow-net --allow-read --allow-env /app/server.ts
     labels:
-      - traefik.http.routers.shop.rule=Host(`startup.local.gd`) && PathPrefix(`/shop`)
+      - traefik.http.routers.shop.rule=Host(`reverse.traefik.me`) && PathPrefix(`/shop`)
+      - traefik.http.routers.shop-tls.tls.domains[0].main=reverse.traefik.me
+      - traefik.http.routers.shop.tls=true
       - traefik.http.services.shop.loadbalancer.server.port=8080
     environment:
       - APP_NAME=Shop
     volumes:
       - ./app:/app
+    networks:
+      - docker-traffic
 
   showcase:
     restart: always
     image: denoland/deno:1.11.2
     command: run --allow-net --allow-read --allow-env /app/server.ts
     labels:
-      - traefik.http.routers.showcase.rule=Host(`startup.local.gd`) && PathPrefix(`/showcase`)
+      - traefik.http.routers.showcase.rule=Host(`reverse.traefik.me`) && PathPrefix(`/showcase`)
+      - traefik.http.routers.showcase-tls.tls.domains[0].main=reverse.traefik.me
+      - traefik.http.routers.showcase.tls=true
       - traefik.http.services.showcase.loadbalancer.server.port=8080
     environment:
       - APP_NAME=Showcase
     volumes:
       - ./app:/app
-    expose:
-      - 8080
+    networks:
+      - docker-traffic
+
+networks:
+  docker-traffic:
+    driver: bridge

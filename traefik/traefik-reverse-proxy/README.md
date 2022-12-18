@@ -6,7 +6,7 @@ An example of how to use Traefik with Docker Compose to make routing easier.
 
 1. Build and run the stack with Docker Compose - `docker compose up --build`
 2. Navigate to [localhost:8080](http://localhost:8080) to see the Traefik dashboard
-3. Navigate to [startup.local.gd](http://startup.local.gd) to see the first app
+3. Navigate to [reverse.traefik.me](http://reverse.traefik.me) to see the first app
 
 ## Why?
 
@@ -19,25 +19,25 @@ and why you'd want to do this and some more explanation on the code
 ## localhost
 
 ```shell
-ping startup.local.gd
+ping reverse.traefik.me
 ```
 
 ## home
 
 ```shell
-cuel http://startup.local.gd
+cuel http://reverse.traefik.me
 ```
 
 ## shop
 
 ```shell
-cuel http://startup.local.gd:8080/shop
+cuel http://reverse.traefik.me/shop
 ```
 
 ## showcase
 
 ```shell
-cuel http://startup.local.gd:8080/showcase
+cuel http://reverse.traefik.me/showcase
 ```
 
 
