@@ -25,19 +25,19 @@ ping reverse.traefik.me
 ## home
 
 ```shell
-cuel http://reverse.traefik.me
+curl https://reverse.traefik.me/
 ```
 
 ## shop
 
 ```shell
-cuel http://reverse.traefik.me/shop
+curl https://reverse.traefik.me/shop
 ```
 
 ## showcase
 
 ```shell
-cuel http://reverse.traefik.me/showcase
+curl https://reverse.traefik.me/showcase
 ```
 
 
