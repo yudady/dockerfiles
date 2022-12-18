@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golang-http
+spec:
+  selector:
+    matchLabels:
+      app: golang-http
+  template:
+    metadata:
+      labels:
+        app: golang-http
+    spec:
+      containers:
+      - name: golang-http
+        image: yudady/golang-http
+        ports:
+          - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: golang-http
+spec:
+  ports:
+    - port: 8080
+      name: http
+  type: ClusterIP
+  selector:
+    app: golang-http

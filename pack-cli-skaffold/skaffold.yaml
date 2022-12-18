@@ -1,0 +1,40 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: pack-cli-skaffold
+
+#################################################
+build:
+  local:
+    push: false # don't push on Docker Hub
+    useDockerCLI: true
+  # something that needs to be maintained
+  artifacts:
+    - image: yudady/golang-http # rebuild entire image if below sync files are not matched
+      context: golang-http # watch for changes in this dir
+      buildpacks:
+        builder: gcr.io/buildpacks/builder:v1
+
+#################################################
+manifests:
+  rawYaml:
+    - ./infra/*
+
+#################################################
+deploy:
+  kubectl:
+    flags:
+      disableValidation: true
+  kubeContext: minikube
+  logs:
+    prefix: podAndContainer
+
+#################################################
+profiles:
+  - name: pack-cli-skaffold
+    activation:
+      - kubeContext: minikube
+
+
+
+
