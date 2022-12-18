@@ -1,3 +1,4 @@
+# https://skaffold.dev/docs/references/yaml/?version=v3
 apiVersion: skaffold/v3
 kind: Config
 metadata:
@@ -14,6 +15,15 @@ build:
       context: golang-http # watch for changes in this dir
       buildpacks:
         builder: gcr.io/buildpacks/builder:v1
+    - image: yudady/gradle # rebuild entire image if below sync files are not matched
+      context: gradle # watch for changes in this dir
+      buildpacks:
+        builder: gcr.io/buildpacks/builder:v1
+    - image: yudady/maven # rebuild entire image if below sync files are not matched
+      context: maven # watch for changes in this dir
+      buildpacks:
+        builder: gcr.io/buildpacks/builder:v1
+
 
 #################################################
 manifests:
