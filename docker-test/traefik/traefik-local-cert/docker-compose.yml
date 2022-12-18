@@ -8,7 +8,7 @@ services:
     volumes:
       - ./data/certs:/etc/ssl/traefik
     networks:
-      - dev
+      - docker-traffic
 
   traefik:
     restart: unless-stopped
@@ -18,8 +18,10 @@ services:
       reverse-proxy-https-helper:
         condition: service_completed_successfully
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80 # 暴露的 http 端口
+      - 443:443 # 暴露的 https 端口
+      - 8080:8080 # webUI暴露的端口(必須製定--api.insecure=true才可以訪問)
+    command: --api.insecure=true --providers.docker     # 啟用webUI 並告訴Traefile去監聽docker的容器實例
     labels:
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
     volumes:
@@ -28,16 +30,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./data/certs:/etc/ssl/traefik
     networks:
-      - dev
+      - docker-traffic
 
-  app1:
-    container_name: app1
+  mygov1:
     # A container that exposes an API to show its IP address
     image: yudady/mygo:v1
     deploy:
-      replicas: 1
+      replicas: 3
     networks:
-      - dev
+      - docker-traffic
     labels:
       - "traefik.http.routers.app1.rule=Host(`app1.traefik.me`)"
       - "traefik.http.routers.app1-tls.tls.domains[0].main=app1.traefik.me"
@@ -45,14 +46,13 @@ services:
       - "traefik.http.routers.app1.tls=true"
       - "traefik.http.services.app1.loadbalancer.server.port=8080" # container port
 
-  app2:
-    container_name: app2
+  mygov2:
     # A container that exposes an API to show its IP address
     image: yudady/mygo:v2
     deploy:
-      replicas: 1
+      replicas: 3
     networks:
-      - dev
+      - docker-traffic
     labels:
       - "traefik.http.routers.app2.rule=Host(`app2.traefik.me`)"
       - "traefik.http.routers.app2-tls.tls.domains[0].main=app2.traefik.me"
@@ -61,8 +61,8 @@ services:
       - "traefik.http.services.app2.loadbalancer.server.port=8080" # container port
 
 networks:
-  dev:
-
+  docker-traffic:
+    driver: bridge
 
 # https://app1.traefik.me
 # https://app2.traefik.me
