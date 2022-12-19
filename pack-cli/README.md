@@ -1,9 +1,24 @@
-# http
+# [pack](https://paketo.io/docs/)
+
+- [paketo-buildpacks](https://github.com/paketo-buildpacks)
+- [buildpacks](https://buildpacks.io/docs/app-developer-guide/build-an-app/)
+
+
+## set default builder
 
 ```shell
+pack config default-builder gcr.io/buildpacks/builder:v1
+
 pack config default-builder paketobuildpacks/builder:full
+pack config default-builder paketobuildpacks/builder:base
+pack config default-builder paketobuildpacks/builder:tiny
 ```
 
+## clean docker image
+
+```shell
+docker system prune
+```
 
 ## golang
 
@@ -41,4 +56,21 @@ docker run -it --rm -p 8080:8080 yudady/java-maven:v1
 
 ```
 
-docker system prune
+
+```shell
+pack build samples/java-native \
+  --env BP_NATIVE_IMAGE=true \
+  --env BP_LOG_LEVEL=DEBUG \
+  --path java/native-image/java-native-image-sample \
+  --volume ${HOME}/.m2:/home/cnb/.m2:rw
+
+
+pack build samples/java-native \
+  --env BP_NATIVE_IMAGE=true \
+  --path java/native-image/java-native-image-sample \
+  --volume ${HOME}/.m2:/home/cnb/.m2:rw \
+  --buildpack paketo-buildpacks/graalvm \
+  --buildpack paketo-buildpacks/java-native-image \
+  --env BP_LOG_LEVEL=DEBUG
+```
+
