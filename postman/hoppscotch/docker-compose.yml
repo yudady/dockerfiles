@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+
+  hoppscotch:
+    container_name: hoppscotch
+    image: hoppscotch/hoppscotch:latest
+    ports:
+      - "3000:3000"
+    restart: always
+
+  proxyscotch:
+    container_name: hoppscotch
+    image: hoppscotch/proxyscotch:latest
+    ports:
+      - "9159:9159"
+    restart: always
