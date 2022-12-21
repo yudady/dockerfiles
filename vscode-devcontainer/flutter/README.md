@@ -4,7 +4,8 @@
 
 
 ## install
-https://docs.flutter.dev/get-started/install/linux
+[download](https://docs.flutter.dev/get-started/install/linux)
+
 
 
 
