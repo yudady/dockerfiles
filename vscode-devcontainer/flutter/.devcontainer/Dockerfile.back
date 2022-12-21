@@ -1,0 +1,47 @@
+# Note: You can use any Debian/Ubuntu based image you want. 
+FROM mcr.microsoft.com/devcontainers/base:ubuntu
+
+RUN set -ex;
+RUN apt-get update;
+RUN apt-get upgrade -y;
+RUN apt-get install -y  --no-install-recommends \
+    bash-completion \
+    build-essential \
+    curl \
+    file \
+    zip \
+    unzip \
+    htop \
+    jq \
+    less \
+    locales \
+    man-db \
+    software-properties-common \
+    sudo \
+    time \
+    vim \
+    multitail \
+    lsof \
+    openssh-client \
+    iproute2 \
+    lsb-release \
+    #    xz-utils \
+    libglu1-mesa \
+    snapd \
+    gzip \
+    ninja-build \
+    make \
+    meson \
+    cmake \
+    curl \
+    git \
+    clang \
+    libgtk-3-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*;
+
+RUN mkdir -p ~/development && cd ~/development && \
+    git clone https://github.com/flutter/flutter.git -b stable &&  \
+    echo 'export PATH="$PATH:$HOME/development/flutter/bin"' >> ~/.bashrc 
+# && source ~/.bashrc
+
