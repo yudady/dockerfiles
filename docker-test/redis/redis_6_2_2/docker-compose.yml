@@ -2,7 +2,8 @@ version: '3.7'
 services:
   redis_6_2_2:
     container_name: redis_6_2_2
-    image: redis:6.2.2
+    build: .
+    image: yudady/redis_6_2_2
     privileged: true  # 启动特权模式
     sysctls:
       net.core.somaxconn: 10240
@@ -20,14 +21,13 @@ services:
         echo 551 > /proc/sys/net/core/somaxconn
         sysctl vm.overcommit_memory=1
         redis-server /etc/redis.conf --appendonly yes
-
     networks:
       - proxy
     deploy:
       resources:
         limits:
-          cpus: '2'
-          memory: 8gb
+          cpus: '1'
+          memory: 128mb
 
 networks:
   proxy:
