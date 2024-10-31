@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  vscode-ubuntu:
+    user: root
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+    image: yudady/vscode-ubuntu
+    volumes:
+      - ..:/workspace:cached
+#      - ~/.m2:/root/.m2:rw
+#      - ~/.gradle:/root/.gradle:rw
+    command: sleep infinity
