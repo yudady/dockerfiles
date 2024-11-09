@@ -9,23 +9,8 @@ RUN set -ex; \
     apt-get install -y zlib1g-dev; \
     apt-get install -y  --no-install-recommends \
     #        apt-utils dialog 
-    zip \
-    unzip \
-    bash-completion \
-    build-essential \
-    htop \
-    jq \
-    less \
-    locales \
-    man-db \
-    software-properties-common \
-    sudo \
-    time \
-    vim \
-    multitail \
-    lsof \
-    iputils-ping \
-    openssh-client iproute2 lsb-release; 
+    zip unzip bash-completion build-essential htop jq less locales man-db software-properties-common \
+    sudo time vim multitail lsof iputils-ping openssh-client iproute2 lsb-release lrzsz;
 
 #######
 #RUN curl -fsSL "https://get.sdkman.io" | bash; \
