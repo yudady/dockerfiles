@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+
+  ollama-deep-researcher:
+    container_name: ollama-deep-researcher
+    image: yudady/ollama-deep-researcher
+    ports:
+      - "2024:2024"
+    environment:
+      SEARCH_API: "tavily"
+      TAVILY_API_KEY: "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"
+      OLLAMA_BASE_URL: "http://host.docker.internal:11434/"
+      OLLAMA_MODEL: "gemma3:latest"
+
+
